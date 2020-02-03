@@ -30,6 +30,8 @@ namespace lifegame
         double birthProbability;
         double initBirthProbability;
 
+        bool isTimerActive = false;
+
         private System.Timers.Timer worldTimer;
         Random r = new Random();
 
@@ -274,6 +276,7 @@ namespace lifegame
         private void OnTimedEvent(Object source, ElapsedEventArgs e)
         {
             worldTimer.Stop();
+            if (!isTimerActive) return;
             GenerateNextPopulation();
             ShowWorldUIPartial();
             if (worldTimer != null)
@@ -317,10 +320,12 @@ namespace lifegame
         {
             if (button3.Text == "Запуск")
             {
+                isTimerActive = true;
                 button3.Text = "Стоп";
                 SetTimer();
             } else
             {
+                isTimerActive = false;
                 StopTimer();
                 button3.Text = "Запуск";
             }
